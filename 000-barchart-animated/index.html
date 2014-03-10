@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+  <meta charset="utf-8">
+  <title>D3 collections by Jan Carlo Viray</title>
+    <style>
+        body {
+            height: 300px;
+            position: relative;
+        }
+        .bar {
+            background: #CCC;
+            float: left;
+            width: 20px;
+            margin: 0 5px;
+            position: absolute;
+            bottom: 0px;
+            cursor: pointer;
+        }
+        .bar:hover {
+            fill: #DDD;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        var dataset = [ 5, 10, 13, 19, 21, 25, 
+                       22, 18, 15, 13, 11, 12, 
+                       15, 20, 18, 17, 16, 18, 
+                       23, 25 ];
+        
+        d3.select('body')
+            .on('click',function(){randomize();})
+            .transition()
+            .duration(1000)
+            .style('background','white');
+            
+        var svg = d3.select('body').append('svg');
+        
+        function randomize(){
+            var length = dataset.length;
+            for(var i = 0; i < length; i++){
+                dataset[i] = parseInt(Math.random() * 30,10);
+            }
+            //dataset[length + 1] = parseInt(Math.random() * 30,10);
+            console.log(dataset);
+            redraw();
+        }
+        
+        /* SIMPLE UPDATE */
+        function update(){
+            // why no "join" here like enter and exit?
+            // because length of data array is fixed, so the # of nodes never changes
+            // thus enter and exit selections are always empty
+            var chart = svg.selectAll('rect')
+            .data(dataset)
+            .transition()
+            .duration(2000)
+            .attr('height',function(d){return d * 10;})
+        }
+        
+        function redraw(){
+            var chart = svg.selectAll('rect')
+            .data(dataset)
+            
+            // enter
+            chart
+            .enter()
+            .insert('rect','line')
+            .attr('x',function(d){return d;})
+            .attr('height',function(d){return d * 10;})
+            
+            // update
+            chart
+            .transition()
+            .duration(1000)
+            .attr('height',function(d){return d * 10;})
+            .attr('x',function(d, i){return i * 30;})
+            
+            // exit
+            chart
+            .exit()
+            .remove()
+        }
+        
+        function visualize(){
+            var chart = svg.selectAll('rect')
+            .data(dataset)
+            .enter()
+            .append('rect')
+            .attr('x',function(d, i){return i * 30;})
+            .attr('width',20)
+            .attr('fill','gray')
+            .attr('height',0)
+            .attr('class','bar')
+            .on('click',function(d,i){ alert(d + ':' + i); })
+            .transition()
+            .duration(1000)
+            .delay(1000)
+            .attr('height',function(d){return d * 10;})
+            
+            console.log('enter', chart)
+        }
+        
+        visualize();
+    </script>
+</body>
+</html>
