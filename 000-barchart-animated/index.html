@@ -6,7 +6,7 @@
   <title>D3 collections by Jan Carlo Viray</title>
     <style>
         body {
-            height: 300px;
+            height: 100%;
             position: relative;
         }
         .bar {
@@ -21,6 +21,13 @@
         .bar:hover {
             fill: #DDD;
         }
+      svg {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        position: relative;
+        bottom: 0;
+        height: 100%;
+      }
     </style>
 </head>
 <body>
@@ -34,10 +41,13 @@
             .on('click',function(){randomize();})
             .transition()
             .duration(1000)
+            .style('margin','0')
             .style('background','white');
             
-        var svg = d3.select('body').append('svg');
-        
+        var svg = d3.select('body').append('svg').attr('width', window.innerWidth);
+      
+      setInterval(randomize, 1500);
+      
         function randomize(){
             var length = dataset.length;
             for(var i = 0; i < length; i++){
@@ -45,6 +55,8 @@
             }
             //dataset[length + 1] = parseInt(Math.random() * 30,10);
             console.log(dataset);
+          
+            d3.select('svg').attr('width', window.innerWidth);
             redraw();
         }
         
@@ -76,7 +88,15 @@
             .transition()
             .duration(1000)
             .attr('height',function(d){return d * 10;})
-            .attr('x',function(d, i){return i * 30;})
+            .attr('x',function(d, i){return i * (window.innerWidth / dataset.length);})
+            .attr('width', (window.innerWidth / dataset.length) - 5)
+            .attr('fill',function(d){
+              if(d > (15)){
+                return '#4588F7';
+              } else {
+                return '#999';
+              }
+            })
             
             // exit
             chart
@@ -90,7 +110,7 @@
             .enter()
             .append('rect')
             .attr('x',function(d, i){return i * 30;})
-            .attr('width',20)
+            .attr('width', (window.innerWidth / dataset.length) - 5)
             .attr('fill','gray')
             .attr('height',0)
             .attr('class','bar')
