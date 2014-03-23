@@ -5,103 +5,42 @@
   <meta charset="utf-8">
   <title>D3 collections by Jan Carlo Viray</title>
     <style>
-        body {
-            height: 100%;
-            position: relative;
-        }
-        .bar {
-            background: #CCC;
-            float: left;
-            width: 20px;
-            margin: 0 5px;
-            position: absolute;
-            bottom: 0px;
-            cursor: pointer;
-        }
-        .bar:hover {
-            fill: #DDD;
-        }
-      svg {
-        -webkit-transform: rotate(180deg);
-        transform: rotate(180deg);
-        position: relative;
-        bottom: 0;
-        height: 100%;
-      }
+        body { height: 100%; position: relative; margin: 0; background: #FFF; }
+        .bar { background: #CCC; float: left; width: 20px; margin: 0 5px; position: absolute; bottom: 0px; cursor: pointer; }
+        .bar:hover { fill: #DDD; }
+        svg { -webkit-transform: rotate(180deg); transform: rotate(180deg); position: relative; bottom: 0; height: 100%; width: 100%; }
     </style>
 </head>
 <body>
     <script>
-        var dataset = [ 5, 10, 13, 19, 21, 25, 
-                       22, 18, 15, 13, 11, 12, 
-                       15, 20, 18, 17, 16, 18, 
-                       23, 25 ];
-        
-        d3.select('body')
-            .on('click',function(){randomize();})
-            .transition()
-            .duration(1000)
-            .style('margin','0')
-            .style('background','white');
-            
         var svg = d3.select('body').append('svg').attr('width', window.innerWidth);
-      
-      setInterval(randomize, 1500);
-      
+        var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13, 11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+
         function randomize(){
             var length = dataset.length;
             for(var i = 0; i < length; i++){
                 dataset[i] = parseInt(Math.random() * 30,10);
             }
-            //dataset[length + 1] = parseInt(Math.random() * 30,10);
-            console.log(dataset);
-          
-            d3.select('svg').attr('width', window.innerWidth);
+
             redraw();
         }
-        
-        /* SIMPLE UPDATE */
-        function update(){
-            // why no "join" here like enter and exit?
-            // because length of data array is fixed, so the # of nodes never changes
-            // thus enter and exit selections are always empty
-            var chart = svg.selectAll('rect')
-            .data(dataset)
-            .transition()
-            .duration(2000)
-            .attr('height',function(d){return d * 10;})
-        }
-        
+
         function redraw(){
-            var chart = svg.selectAll('rect')
-            .data(dataset)
-            
-            // enter
-            chart
-            .enter()
-            .insert('rect','line')
-            .attr('x',function(d){return d;})
-            .attr('height',function(d){return d * 10;})
+            var chart = svg.selectAll('rect').data(dataset)
             
             // update
             chart
             .transition()
-            .duration(1000)
-            .attr('height',function(d){return d * 10;})
+            .duration(500)
             .attr('x',function(d, i){return i * (window.innerWidth / dataset.length);})
             .attr('width', (window.innerWidth / dataset.length) - 5)
-            .attr('fill',function(d){
-              if(d > (15)){
-                return '#4588F7';
-              } else {
-                return '#999';
-              }
-            })
+            .attr('height',function(d){return d * 10;})
+            .attr('fill',function(d){ return d > 15 ? '#4588F7' : '#999';})
             
             // exit
-            chart
-            .exit()
-            .remove()
+            chart.exit().remove()
+
+            d3.select('svg').attr('width', window.innerWidth);
         }
         
         function visualize(){
@@ -109,21 +48,19 @@
             .data(dataset)
             .enter()
             .append('rect')
-            .attr('x',function(d, i){return i * 30;})
+            .attr('x',function(d, i){return i * (window.innerWidth / dataset.length);})
             .attr('width', (window.innerWidth / dataset.length) - 5)
             .attr('fill','gray')
             .attr('height',0)
             .attr('class','bar')
             .on('click',function(d,i){ alert(d + ':' + i); })
             .transition()
-            .duration(1000)
-            .delay(1000)
+            .duration(500)
             .attr('height',function(d){return d * 10;})
-            
-            console.log('enter', chart)
         }
         
         visualize();
+        setInterval(randomize, 900);
     </script>
 </body>
 </html>
