@@ -27,20 +27,19 @@
         .attr('height',h);
 
         svg
-        .selectAll('rect')          // selects all rects inside of svg.
-        .data(dataset)              // sees 20 values and are handed off to..
-        .enter()                    // returns a placeholder selection for each data point that *does not yet have a corresponding 'rect'*
-        .append('rect')             // for each of the 20 placeholders, append 'rect' into the DOM
-        .attr('x',function(d,i){
-            return i * (w / dataset.length);    // flexible and dynamic based on size of svg and # of data
+        .selectAll('rect')      // selects all rects inside of svg.
+        .data(dataset)          // sees 20 values and are handed off to..
+        .enter()                // returns a placeholder selection for each data point that *does not yet have a corresponding 'rect'*
+        .append('rect')         // for each of the 20 placeholders, append 'rect' into the DOM
+        .attr({
+            'x': function(d,i){ return i * (w/dataset.length);},    // flexible and dynamic based on size of svg and # of data
+            'y': function(d){return h - (d * 4);},                  // to "flip" due to top-left being 0,0 and expands bottom-right
+            'width': w / dataset.length - barPad,
+            'height': function(d){ return d * 4; },
+            'fill': function(d){ return "rgb(0, 0, " + (d * 10) + ")"; }
         })
-        .attr('y', function(d){
-            return h - d;
-        })
-        .attr('width', w / dataset.length - barPad)
-        .attr('height',function(d){
-            return d;
-        });
+
+        ;
 
     </script>
 </body>
