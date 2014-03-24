@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+  <meta charset="utf-8">
+  <title>D3 collections by Jan Carlo Viray</title>
+    <style>
+        html { height: 100%; }
+        body { height: 100%; width: 100%; position: relative; margin: 0; background: #FFF; }
+        #container {height:100%;width:100%;position:relative;}
+        .bar { background: #CCC; float: left; width: 20px; margin: 0 5px; position: absolute; bottom: 0; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+                11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+
+        d3.select('#container').selectAll('div')
+        .data(dataset)
+        .enter()
+        .append('div')
+        .attr('class','bar')
+        .style('left',function(d, i){
+            var left = i * 30;
+            return left + 'px';
+        })
+        .style('height',function(d){
+            var height = d * 10;
+            return height + 'px';
+        });
+    </script>
+</body>
+</html>

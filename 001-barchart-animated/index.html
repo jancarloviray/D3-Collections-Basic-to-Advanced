@@ -27,7 +27,7 @@
 
         function redraw(){
             var chart = svg.selectAll('rect').data(dataset)
-            
+
             // update
             chart
             .transition()
@@ -36,13 +36,13 @@
             .attr('width', (window.innerWidth / dataset.length) - 5)
             .attr('height',function(d){return d * 10;})
             .attr('fill',function(d){ return d > 15 ? '#4588F7' : '#999';})
-            
+
             // exit
             chart.exit().remove()
 
             d3.select('svg').attr('width', window.innerWidth);
         }
-        
+
         function visualize(){
             var chart = svg.selectAll('rect')
             .data(dataset)
@@ -58,7 +58,7 @@
             .duration(500)
             .attr('height',function(d){return d * 10;})
         }
-        
+
         visualize();
         setInterval(randomize, 900);
     </script>
