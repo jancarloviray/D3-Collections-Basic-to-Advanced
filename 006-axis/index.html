@@ -17,7 +17,7 @@
     <script>
         var w = 800;
         var h = 300;
-        var padding = 20;
+        var padding = 30;
         var dataset = [
                 [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
                 [410, 12], [475, 44], [25, 67], [85, 21], [220, 88]
@@ -74,7 +74,12 @@
         var xAxis = d3.svg.axis()
         .scale(xScale)              // each axis needs to be told on what scale to operate
         .orient('bottom')           // where labels would appear visually
-        .ticks(5)                   // set rough # of ticks
+        .ticks(5);                   // set rough # of ticks
+
+        var yAxis = d3.svg.axis()
+        .scale(yScale)
+        .orient('left')
+        .ticks(5);
 
         svg.append('g')             // #call() takes the incoming selection and hands that off to any function.
         .call(xAxis)
@@ -82,6 +87,13 @@
             'class':'axis',
             'transform':'translate(0,' + (h-padding) + ')'  // move it down
         });
+
+        svg.append('g')
+        .attr({
+            'class':'axis',
+            'transform':'translate(' + padding + ',0)'
+        })
+        .call(yAxis);
 
     </script>
 </body>
