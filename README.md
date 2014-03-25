@@ -7,7 +7,9 @@ My main goal for this is to showcase D3 from the most basic to advanced, using s
 
 __To Run (follow this format):__
 
+https://rawgithub.com/jancarloviray/D3-Collections-Basic-to-Advanced/master/007-random-data/index.html
 http://rawgithub.com/jancarloviray/d3-sample-collections/master/001-barchart-animated/index.html
+etc..
 
 _rawgithub.com is an external service that allows you to run your html files as if they are hosted._
 
