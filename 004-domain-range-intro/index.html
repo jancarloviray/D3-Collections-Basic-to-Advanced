@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="../d3.v3.js"></script>
+  <meta charset="utf-8">
+  <title>D3 collections by Jan Carlo Viray</title>
+</head>
+<body>
+    <ul>
+        <li>A scale's <strong>input domain</strong> is the range of possible input data values.</li>
+        <li>A scale's <strong>output range</strong> is the range of possible output values, commonly used as display values in pixels. It's completely up to you.</li>
+        <li>If you decide that the shortest bar will be 10px tall and the tallest would be 300px, you could set an output range of 10 and 300</li>
+    </ul>
+    <script>
+        var scale = d3.scale.linear();
+        scale.domain([100,500]);
+        scale.range([10, 350]);
+
+        scale(100); // 10
+        scale(300); // 180
+        scale(500); // 350
+    </script>
+</body>
+</html>
