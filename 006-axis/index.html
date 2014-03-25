@@ -73,7 +73,8 @@
         /* axis */
         var xAxis = d3.svg.axis()
         .scale(xScale)              // each axis needs to be told on what scale to operate
-        .orient('bottom');          // where labels would appear visually
+        .orient('bottom')           // where labels would appear visually
+        .ticks(5)                   // set rough # of ticks
 
         svg.append('g')             // #call() takes the incoming selection and hands that off to any function.
         .call(xAxis)
