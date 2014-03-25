@@ -29,6 +29,10 @@
         .domain([0, d3.max(dataset, function(d){ return d[1];})])
         .range([h - padding, padding]); // start from largest, to smallest to flip!
 
+        var rScale = d3.scale.linear()
+        .domain([0, d3.max(dataset, function(d){return d[1];})])
+        .range([1, 15]);
+
         /* setup svg */
         var svg = d3.select('body')
         .append('svg')
@@ -43,7 +47,7 @@
         .attr({
             'cx':function(d){return xScale(d[0]);},
             'cy':function(d){return yScale(d[1]);},
-            'r':function(d){return Math.sqrt(h-d[1]);}
+            'r':function(d){return rScale(d[1]);}
         });
 
         /* labels */
